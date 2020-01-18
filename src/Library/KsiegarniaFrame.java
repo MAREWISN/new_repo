@@ -15,7 +15,6 @@ public class KsiegarniaFrame extends JFrame {
         Ksiegarnia ksiegarnia = new Ksiegarnia();
         setTitle("Księgarnia");
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        setDefaultLookAndFeelDecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JButton addBookButton = new JButton("Dodaj książkę");
         JButton checkBooks = new JButton("Pokaż zbiór książek");
@@ -27,11 +26,35 @@ public class KsiegarniaFrame extends JFrame {
 
         addBookButton.addActionListener(actionEvent ->
         {
-            String nazwa;
-            Ksiazka ksiazka = new Ksiazka("W pustyni i w puszczy", "Przygodowa", 2007);
-            ksiegarnia.dodajKsiazke(ksiazka);
-            nazwa = ksiazka.getNazwa();
-            System.out.println("Dodano " + nazwa);
+            JPanel nextPanel = new JPanel();
+            JFrame frame = new JFrame();
+            frame.setSize(DEFAULT_WIDTH, DEFAULT_WIDTH);
+            frame.setTitle("Dodawanie nowej książki");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            JTextField name = new JTextField(30);
+            JTextField genre = new JTextField(30);
+            JTextField year = new JTextField(4);
+            JButton submitButton = new JButton("Potwierdź");
+
+            nextPanel.add(name);
+            nextPanel.add(genre);
+            nextPanel.add(year);
+            nextPanel.add(submitButton);
+            frame.add(nextPanel);
+            frame.setVisible(true);
+
+            submitButton.addActionListener(actionEvent1 -> {
+                String nazwa = name.getText();
+                String rodzaj = genre.getText();
+                int rok_wydania = Integer.parseInt(year.getText());
+                Ksiazka ksiazka = new Ksiazka(nazwa, rodzaj, rok_wydania);
+                ksiegarnia.dodajKsiazke(ksiazka);
+                nazwa = ksiazka.getNazwa();
+
+                System.out.println("Dodano " + nazwa);
+                frame.dispose();
+            });
+
         });
 
         checkBooks.addActionListener(actionEvent ->
@@ -39,6 +62,7 @@ public class KsiegarniaFrame extends JFrame {
             ksiegarnia.getZbior();
 
         });
+
 
     }
 
