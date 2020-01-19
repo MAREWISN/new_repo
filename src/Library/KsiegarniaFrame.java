@@ -1,9 +1,9 @@
 package Library;
 
+import Library.DB_CONNECTION.ConnectDB;
+
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.sql.*;
 
 public class KsiegarniaFrame extends JFrame {
     private final static int DEFAULT_WIDTH = 300;
@@ -69,7 +69,8 @@ public class KsiegarniaFrame extends JFrame {
 
         checkBooks.addActionListener(actionEvent ->
         {
-            ksiegarnia.getZbior();
+            ConnectDB.checkBooks();
+//            ksiegarnia.getZbior();
 
         });
 
