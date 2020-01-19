@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class KsiegarniaFrame extends JFrame {
     private final static int DEFAULT_WIDTH = 300;
     private final static int DEFAULT_HEIGHT = 200;
-    private JPanel panel;
 
     public KsiegarniaFrame ()
     {
@@ -18,7 +17,7 @@ public class KsiegarniaFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JButton addBookButton = new JButton("Dodaj książkę");
         JButton checkBooks = new JButton("Pokaż zbiór książek");
-        panel = new JPanel();
+        JPanel panel = new JPanel();
 
         panel.add(addBookButton);
         panel.add(checkBooks);
@@ -26,20 +25,22 @@ public class KsiegarniaFrame extends JFrame {
 
         addBookButton.addActionListener(actionEvent ->
         {
+
             JPanel nextPanel = new JPanel();
             JFrame frame = new JFrame();
-            frame.setSize(DEFAULT_WIDTH, DEFAULT_WIDTH);
+            frame.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
             frame.setTitle("Dodawanie nowej książki");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             JTextField name = new JTextField(30);
             JTextField genre = new JTextField(30);
             JTextField year = new JTextField(4);
             JButton submitButton = new JButton("Potwierdź");
-
+            JButton closeButton = new JButton("Zamknij");
             nextPanel.add(name);
             nextPanel.add(genre);
             nextPanel.add(year);
             nextPanel.add(submitButton);
+            nextPanel.add(closeButton);
             frame.add(nextPanel);
             frame.setVisible(true);
 
@@ -47,11 +48,20 @@ public class KsiegarniaFrame extends JFrame {
                 String nazwa = name.getText();
                 String rodzaj = genre.getText();
                 int rok_wydania = Integer.parseInt(year.getText());
-                Ksiazka ksiazka = new Ksiazka(nazwa, rodzaj, rok_wydania);
-                ksiegarnia.dodajKsiazke(ksiazka);
-                nazwa = ksiazka.getNazwa();
+                try {
+                    Ksiazka ksiazka = new Ksiazka(nazwa, rodzaj, rok_wydania);
+                    ksiegarnia.dodajKsiazke(ksiazka);
+                    nazwa = ksiazka.getNazwa();
+                    System.out.println("Dodano książkę " + nazwa);
+                }
 
-                System.out.println("Dodano " + nazwa);
+                catch (NumberFormatException e) {
+                    System.out.println(e);
+                }
+            });
+
+            closeButton.addActionListener(actionEvent1 ->
+            {
                 frame.dispose();
             });
 
@@ -65,5 +75,4 @@ public class KsiegarniaFrame extends JFrame {
 
 
     }
-
 }
