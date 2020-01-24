@@ -7,6 +7,13 @@ public class ConnectDB {
     private static String user = "root";
     private static String password = "35Rdaf2fxtb3e8bz";
 
+    public static Connection connectDB() throws ClassNotFoundException, SQLException {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            return DriverManager.getConnection(url, user, password);
+
+    }
+
     public static void checkBooks ()
     {
         try {
