@@ -7,10 +7,81 @@ public class ConnectDB {
     private static String user = "root";
     private static String password = "35Rdaf2fxtb3e8bz";
 
+    public static void closeConnection() throws ClassNotFoundException, SQLException
+    {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection(url, user, password);
+        con.close();
+    }
     public static Statement connectDB() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection(url, user, password);
         return con.createStatement();
+    }
+
+    public static int getBookId(String bookName, String publishingHouse, String genre, int publishingYear,
+                                double price, int authorsId)
+    {
+        int bookId = 0;
+        try {
+            Statement stmt = ConnectDB.connectDB();
+            String sql = "select idksiazki from ksiazki where nazwa_ksiazki='" + bookName + "' AND wydawnictwo='" + publishingHouse +
+                    "' AND rodzaj_ksiazki='" + genre + "' AND rok_wydania='" + publishingYear +
+                    "' AND cena='" + price + "' AND idautora='" + authorsId + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next())
+                bookId = rs.getInt(1);
+        }
+        catch (SQLException | ClassNotFoundException e)
+        {
+            bookId = 0;
+        }
+        return bookId;
+    }
+    public static void addBook(String bookName, String publishingHouse, String genre, int publishingYear,
+                                double price, int quantity, int authorsId)
+    {
+        try {
+            Statement stmt = ConnectDB.connectDB();
+            String sql = "insert into ksiazki (nazwa_ksiazki,wydawnictwo,rodzaj_ksiazki,rok_wydania,cena," +
+                    "ilosc_ksiazek,idautora) values ('" + bookName + "','" + publishingHouse + "','" + genre + "','"
+                    + publishingYear + "','" + price + "','" + quantity + "','" + authorsId + "');";
+            stmt.executeUpdate(sql);
+            System.out.println("Dodano książkę");
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static int getQuantity (int bookId)
+    {
+        int quantity = 0;
+        try {
+            Statement stmt = ConnectDB.connectDB();
+            String sql = "select ilosc_ksiazek from ksiazki where idksiazki=" + bookId + ";";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next())
+                quantity = rs.getInt(1);
+        }
+        catch (SQLException | ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        return quantity;
+    }
+
+    public static void updateQuantity (int bookId, int quantity)
+    {
+        try {
+            Statement stmt = ConnectDB.connectDB();
+            String sql = "update ksiazki set ilosc_ksiazek = '" + quantity + "' where idksiazki = " +
+                    bookId + ";";
+            stmt.executeUpdate(sql);
+            System.out.println("Dodano książki");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Nie udało się dodać książek");
+        }
     }
 
     public static int getAuthorsId(String name, String surname) {
@@ -58,27 +129,5 @@ public class ConnectDB {
             catch (Exception e) {
                 System.out.println(e);
             }
-    }
-    public static void main(String[] args) {
-
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection(url, user, password);
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("insert into ksiazki (nazwa_ksiazki,imie_autora,nazwisko_autora" +
-                    ",wydawnictwo,rodzaj_ksiazki,rok_wydania) " +
-                    "values ('W pustyni i w puszczy','Henryk','Sienkiewicz'," +
-                    "'Nowa Era','Przygodowa','2003')");
-            String sql = "select * from ksiazki";
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next())
-                System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+
-                        rs.getString(3) + " "+rs.getString(4)+" "+
-                        rs.getString(5) + " "+rs.getString(6)+" "+rs.getInt(7)
-                );
-            con.close();
-        }catch (Exception e) {
-            System.out.println(e);
-        }
     }
 }

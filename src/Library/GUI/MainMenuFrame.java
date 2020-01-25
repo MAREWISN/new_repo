@@ -21,13 +21,9 @@ public class MainMenuFrame extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
-        checkBooksButton.addActionListener(actionEvent -> {
-            String name = "Jan";
-            String surname = "Wiśniowski";
-            if (ConnectDB.getAuthorsId(name, surname) == 0)
-            ConnectDB.addAuthor(name, surname);
-            else
-            System.out.println(ConnectDB.getAuthorsId(name, surname));
+        addBookButton.addActionListener(actionEvent -> {
+            AddBookDialog dialog = new AddBookDialog();
+            dialog.setVisible(true);
         });
     }
 }
