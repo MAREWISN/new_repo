@@ -1,5 +1,6 @@
 package Library.GUI;
 
+import Library.Author;
 import Library.DB_CONNECTION.ConnectDB;
 import Library.Genre;
 
@@ -150,7 +151,7 @@ public class AddBookDialog extends JDialog {
             int bookID;
             int quantity;
             if (ConnectDB.getAuthorsId(authorsName, authorsSurname) == 0) {
-                ConnectDB.addAuthor(authorsName, authorsSurname);
+                Author author = new Author(authorsName, authorsSurname);
             }
             // add your code here
             authorsID = ConnectDB.getAuthorsId(authorsName, authorsSurname);

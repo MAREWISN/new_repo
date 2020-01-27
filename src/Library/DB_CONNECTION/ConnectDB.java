@@ -111,8 +111,9 @@ public class ConnectDB {
         }
     }
 
-    public static void checkBooks ()
+    public static String checkBooks ()
     {
+        String s = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, user, password);
@@ -120,14 +121,14 @@ public class ConnectDB {
             String sql = "select * from ksiazki";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next())
-                System.out.println("Tytuł "+rs.getString(2)+"\n Autor "+
-                        rs.getString(3) + " "+rs.getString(4)+" \n Wydawnictwo "+
-                        rs.getString(5) + "\n Rodzaj "+rs.getString(6)+" Data wydania "+rs.getInt(7)
-                        + " \n Cena " + rs.getFloat(8)
-                );
+               s = ("ID " + rs.getInt(1) + " Book Name " +
+                        rs.getString(2) + " Publishing House " + rs.getString(3) +
+                        " Genre " + rs.getString(4) + " Publishing Year " + rs.getInt(5) +
+                        " Price " + rs.getDouble(6) + " Quantity " + rs.getInt(7));
         }
             catch (Exception e) {
-                System.out.println(e);
+                s = e.toString();
             }
+        return s;
     }
 }

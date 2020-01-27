@@ -13,6 +13,8 @@ public class MainMenuFrame extends JFrame{
     private JButton addBookButton;
     private JButton checkBooksButton;
     private JPanel centerPanel;
+    private JTextPane textPane;
+
     public MainMenuFrame()
     {
         mainPanel.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
@@ -21,9 +23,14 @@ public class MainMenuFrame extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
+        textPane.setEditable(false);
         addBookButton.addActionListener(actionEvent -> {
             AddBookDialog dialog = new AddBookDialog();
             dialog.setVisible(true);
+        });
+        checkBooksButton.addActionListener(actionEvent ->
+        {
+            textPane.setText(ConnectDB.checkBooks());
         });
     }
 }

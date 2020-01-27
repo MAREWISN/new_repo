@@ -22,5 +22,6 @@ public class KsiegarniaTest {
         {
             MainMenuFrame frame = new MainMenuFrame();
         });
+
     }
 }

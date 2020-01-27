@@ -49,10 +49,10 @@ public class KsiegarniaFrame extends JFrame {
                 String rodzaj = genre.getText();
                 int rok_wydania = Integer.parseInt(year.getText());
                 try {
-                    Ksiazka ksiazka = new Ksiazka(nazwa, rodzaj, rok_wydania);
-                    ksiegarnia.dodajKsiazke(ksiazka);
-                    nazwa = ksiazka.getNazwa();
-                    System.out.println("Dodano książkę " + nazwa);
+//                    Ksiazka ksiazka = new Ksiazka(nazwa, rodzaj, rok_wydania);
+//                    ksiegarnia.dodajKsiazke(ksiazka);
+//                    nazwa = ksiazka.getNazwa();
+//                    System.out.println("Dodano książkę " + nazwa);
                 }
 
                 catch (NumberFormatException e) {
@@ -69,6 +69,7 @@ public class KsiegarniaFrame extends JFrame {
 
         checkBooks.addActionListener(actionEvent ->
         {
+
             ConnectDB.checkBooks();
 //            ksiegarnia.getZbior();
 
