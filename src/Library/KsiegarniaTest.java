@@ -1,15 +1,30 @@
 package Library;
 
+<<<<<<< HEAD
 import Library.frames.KsiegarniaFrame;
+=======
+import Library.DB_CONNECTION.ConnectDB;
+import Library.GUI.MainMenuFrame;
+import com.sun.tools.javac.Main;
+>>>>>>> feature
 
 import java.awt.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class KsiegarniaTest {
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+//        EventQueue.invokeLater(() ->
+//        {
+//            KsiegarniaFrame frame = new KsiegarniaFrame();
+//            frame.setVisible(true);
+//        });
+
+
         EventQueue.invokeLater(() ->
         {
-            KsiegarniaFrame frame = new KsiegarniaFrame();
-            frame.setVisible(true);
+            MainMenuFrame frame = new MainMenuFrame();
         });
 
     }
